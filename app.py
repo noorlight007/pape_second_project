@@ -153,25 +153,22 @@ def receive():
                                     "title": "Seleccione desde aquí",
                                     "rows": [
                                         {
-                                            "id": "role_driver1",
-                                            "title": "Envoyer un colis / document",
-                                            
+                                        "id": "role_driver1",
+                                        "title": "Envoyer un colis"
                                         },
                                         {
-                                            "id": "role_customer2",
-                                            "title": "Être conduit à l’aéroport",
-                                            
+                                        "id": "role_customer2",
+                                        "title": "Aller à l’aéroport"
                                         },
                                         {
-                                            "id": "role_driver3",
-                                            "title": "Être récupéré à l’aéroport",
-                                            
+                                        "id": "role_driver3",
+                                        "title": "Retour de l’aéroport"
                                         },
                                         {
-                                            "id": "role_customer4",
-                                            "title": "Autres services",
-                                            
-                                        },
+                                        "id": "role_customer4",
+                                        "title": "Autres services"
+                                        }
+
                                     ],
                                 }
                             ]
