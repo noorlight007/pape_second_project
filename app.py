@@ -135,8 +135,8 @@ def receive():
                 print(f"💬 Message ({msg_type}) = {text_body}")
 
                 # Build interactive reply
-                text = f"👋 Bienvenue sur {profile_name or ''}!\nVotre assistant WhatsApp pour vous aider à trouver rapidement la bonne personne pour vos envois de colis ou vos trajets aéroportuaires, sans prise de tête.\nVeuillez sélectionner le service de votre choix :"
-                footer_text = "Abra la lista del menú para elegir"
+                text = f"👋 Bienvenue sur {profile_name or ''}!\nVotre assistant WhatsApp pour vous aider à trouver rapidement la bonne personne pour vos envois de colis ou vos trajets aéroportuaires, sans prise de tête."
+                footer_text = "Veuillez sélectionner le service de votre choix :"
 
                 payload = {
                     "messaging_product": "whatsapp",
