@@ -147,7 +147,7 @@ def receive():
                         "body": {"text": text.strip()},
                         # "footer": {"text": footer_text},
                         "action": {
-                            "button": "Cliquer ici pour choisir",
+                            "button": "Afficher le menu",
                             "sections": [
                                 {
                                     "title": "Seleccione desde aquí",
