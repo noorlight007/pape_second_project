@@ -150,7 +150,7 @@ def receive():
                             "button": "Todos los menús",
                             "sections": [
                                 {
-                                    "title": "Sélectionnez votre profil",
+                                    "title": "Seleccione desde aquí",
                                     "rows": [
                                         {
                                             "id": "role_driver",
