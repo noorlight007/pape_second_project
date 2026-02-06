@@ -135,8 +135,8 @@ def receive():
                 print(f"💬 Message ({msg_type}) = {text_body}")
 
                 # Build interactive reply
-                text = f"👋 Bienvenue sur {profile_name or ''}!\nVotre assistant WhatsApp pour vous aider à trouver rapidement la bonne personne pour vos envois de colis ou vos trajets aéroportuaires, sans prise de tête."
-                footer_text = "Veuillez sélectionner le service de votre choix :"
+                text = f"👋 Bienvenue sur e-service {profile_name or ''}!\nVotre assistant WhatsApp pour vous aider à trouver rapidement la bonne personne pour vos envois de colis ou vos trajets aéroportuaires, sans prise de tête.\n\nVeuillez sélectionner le service de votre choix :"
+                # footer_text = "Veuillez sélectionner le service de votre choix :"
 
                 payload = {
                     "messaging_product": "whatsapp",
@@ -145,9 +145,9 @@ def receive():
                     "interactive": {
                         "type": "list",
                         "body": {"text": text.strip()},
-                        "footer": {"text": footer_text},
+                        # "footer": {"text": footer_text},
                         "action": {
-                            "button": "Todos los menús",
+                            "button": "Cliquer ici pour choisir",
                             "sections": [
                                 {
                                     "title": "Seleccione desde aquí",
