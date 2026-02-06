@@ -135,21 +135,45 @@ def receive():
                 print(f"💬 Message ({msg_type}) = {text_body}")
 
                 # Build interactive reply
-                text = f"Hi {profile_name or ''}, thanks for joining with us. Please choose with which role you want to continue?"
-                footer_text = "Choose from the buttons below."
+                text = f"👋 Bienvenue sur {profile_name or ''}!\nVotre assistant WhatsApp pour vous aider à trouver rapidement la bonne personne pour vos envois de colis ou vos trajets aéroportuaires, sans prise de tête.\nVeuillez sélectionner le service de votre choix :"
+                footer_text = "Abra la lista del menú para elegir"
 
                 payload = {
                     "messaging_product": "whatsapp",
                     "to": sender,
                     "type": "interactive",
                     "interactive": {
-                        "type": "button",
+                        "type": "list",
                         "body": {"text": text.strip()},
                         "footer": {"text": footer_text},
                         "action": {
-                            "buttons": [
-                                {"type": "reply", "reply": {"id": "role_driver", "title": "Delivery Driver"}},
-                                {"type": "reply", "reply": {"id": "role_customer", "title": "General Customer"}},
+                            "button": "Todos los menús",
+                            "sections": [
+                                {
+                                    "title": "Sélectionnez votre profil",
+                                    "rows": [
+                                        {
+                                            "id": "role_driver",
+                                            "title": "Envoyer un colis / document",
+                                            
+                                        },
+                                        {
+                                            "id": "role_customer",
+                                            "title": "Être conduit à l’aéroport",
+                                            
+                                        },
+                                        {
+                                            "id": "role_driver",
+                                            "title": "Être récupéré à l’aéroport",
+                                            
+                                        },
+                                        {
+                                            "id": "role_customer",
+                                            "title": "Autres services",
+                                            
+                                        },
+                                    ],
+                                }
                             ]
                         },
                     },
