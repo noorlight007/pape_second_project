@@ -179,6 +179,9 @@ def receive():
                 # Send message to WhatsApp (sync httpx client for Flask route)
                 with httpx.Client(timeout=20.0) as client:
                     resp = client.post(url, headers=headers, json=payload)
+                    # Update session state after showing menu
+                    session['msg_context'][sender]['state'] = 'awaiting_service_selection'
+                    session.modified = True
                     resp.raise_for_status()
 
         return Response("ok", status=200, mimetype="text/plain")
