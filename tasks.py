@@ -26,6 +26,9 @@ def state_key(sender):
 def data_key(sender):
     return f"wa:data:{sender}"
 
+def to_airport_data_key(sender):
+    return f"wa:to_airport_data:{sender}"
+
 def error_count_key(sender):
     return f"wa:error_count:{sender}"
 
@@ -59,6 +62,28 @@ def update_data(sender, key: str, value: any):
 def clear_data(sender) -> bool:
     """Clear all stored data for a user"""
     return r.delete(data_key(sender)) == 1
+
+# ----------- to airport data management in Redis (can be used to store intermediate data during the conversation) -----------
+def get_to_airport_data(sender) -> dict:
+    """Get stored conversation data for a user"""
+    data = r.get(to_airport_data_key(sender))
+    if data:
+        return json.loads(data)
+    return {}
+
+def set_to_airport_data(sender, data: dict):
+    """Store conversation data for a user"""
+    r.setex(to_airport_data_key(sender), 60*60, json.dumps(data))  # 60 minutes TTL
+
+def update_to_airport_data(sender, key: str, value: any):
+    """Update a specific field in user's conversation data"""
+    data = get_to_airport_data(sender)
+    data[key] = value
+    set_to_airport_data(sender, data)
+
+def clear_to_airport_data(sender) -> bool:
+    """Clear all stored data for a user"""
+    return r.delete(to_airport_data_key(sender)) == 1
 
 
 # ----------- Error counts -----------
@@ -288,6 +313,57 @@ def process_webhook(self, payload: dict):
                         # Send message to WhatsApp (sync httpx client for Flask route)
                         send_whatsapp_message(sender, payload, headers, url)
                         return "ok", 200
+                    
+
+                    elif msg_type == "interactive_list_reply" and list_msg_id == "role_customer2":
+                        # resetting error count on valid selection
+                        clear_error_count(sender)
+                        text = f"🙏 Super, merci pour votre choix !\nNous allons maintenant vous guider étape par étape pour finaliser votre demande.\n\n🌍 Dans quel pays se trouve l’aéroport ?"
+                        # countries = get_countries()
+                        # rows = []
+                        # for c in countries:
+                        #     rows.append({
+                        #         "id": f"list_country_{c['id']}",
+                        #         "title": c['name']
+                        #     })
+                        rows = [{"id": 23, "title": "Sénégal"}]
+                        payload = {
+                            "messaging_product": "whatsapp",
+                            "to": sender,
+                            "type": "interactive",
+                            "interactive": {
+                                "type": "list",
+                                "body": {"text": text.strip()},
+                                "action": {
+                                    "button": "Choisir le pays",
+                                    "sections": [
+                                        {
+                                            "title": "Pays",
+                                            "rows": rows
+                                        }
+                                    ]
+                                },
+                            },
+                        }
+                    
+                        # set_state(sender, "to_airport_country_selected")
+                        clear_state(sender)  # clearing state to reuse same flow functions as for parcel request
+                        # Send message to WhatsApp (sync httpx client for Flask route)
+                        send_whatsapp_message(sender, payload, headers, url)
+                        return "ok", 200
+
+                        
+
+
+
+
+
+
+
+
+
+
+
 
                     elif msg_type == "interactive_list_reply" and list_msg_id in ["role_customer2", "role_driver3", "role_customer4"]:
                         text = f"✅ Service: {text_body}\n\n(Flow à implémenter...)"
