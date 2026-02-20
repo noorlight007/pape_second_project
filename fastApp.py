@@ -31,12 +31,16 @@ BASE_DIR = Path(__file__).resolve().parent
 TEMPLATES_DIR = BASE_DIR / "templates"
 STATIC_DIR = BASE_DIR / "static"
 
-templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
+
+
 
 app = FastAPI()
 
 # Mount static (optional, but common in FastAPI template apps)
 STATIC_DIR.mkdir(exist_ok=True)
+
+
+templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 # Optional: shared async client (only if you need it later)
@@ -177,4 +181,5 @@ async def receive(request: Request):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("fastApp:app", host="0.0.0.0", port=8000, reload=True)
+

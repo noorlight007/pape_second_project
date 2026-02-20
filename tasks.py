@@ -9,7 +9,8 @@ load_dotenv()
 
 WHATSAPP_PHONE_NUMBER_ID=os.getenv("PHONE_NUMBER_ID")
 WHATSAPP_ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
-VERIFY_TOKEN = "6984125oO!"
+WHATSAPP_PERMANENT_TOKEN = os.getenv("PARMANENT_ACCESS_TOKEN")
+VERIFY_TOKEN = "6984125oO!?"
 
 
 from location_manage import get_countries, get_cities_by_country
@@ -139,7 +140,7 @@ def process_webhook(self, payload: dict):
     
     url = f"https://graph.facebook.com/v23.0/{WHATSAPP_PHONE_NUMBER_ID}/messages"
     headers = {
-        "Authorization": f"Bearer {WHATSAPP_ACCESS_TOKEN}",
+        "Authorization": f"Bearer {WHATSAPP_PERMANENT_TOKEN}",
         "Content-Type": "application/json",
     }
 
@@ -890,7 +891,7 @@ def process_webhook(self, payload: dict):
 
     except httpx.HTTPStatusError as e:
         # Graph API returned non-2xx
-        print("❌ WhatsApp API error:", e.response.text)
+        print("❌ WhatsApp API error:", str(e))
         return "ok", 500
 
     except Exception as e:

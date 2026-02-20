@@ -478,11 +478,11 @@ def demo():
     get_cities()
 
 
-if __name__ == "__main__":
-    # create_country("Senegal")
-    # create_country("France")
+# if __name__ == "__main__":
+#     create_country("Senegal")
+#     create_country("France")
 
-    create_city("Dakar", country_name="Senegal")
-    create_city("Paris", country_name="France")
-    create_city("Thiès", country_name="Senegal")
-    create_city("Lyon", country_name="France")
+#     create_city("Dakar", country_name="Senegal")
+#     create_city("Paris", country_name="France")
+#     create_city("Thiès", country_name="Senegal")
+#     create_city("Lyon", country_name="France")
